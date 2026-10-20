@@ -1,0 +1,41 @@
+
+library(gtools)
+
+#calculated posterior dirichlet distribution by hand
+preparams<-c(293,306,37)
+postparams<-c(287,331,18)
+set.seed(42)
+
+#sample dirichlet posterior n times
+presample<-rdirichlet(n=1000, alpha = preparams)
+postsample<-rdirichlet(n=1000, alpha = postparams)
+
+#put data in a dataframe for analysis
+predf<-as.data.frame(presample)
+colnames(predf)<-c("Bush", "Duk", "Other")
+
+postdf<-as.data.frame(postsample)
+colnames(postdf)<-c("Bush", "Duk", "Other")
+
+#number of times bush had a higher likelihood in sampling before and after d ebate
+precount<-sum(predf$Bush > predf$Duk)
+print(precount)
+
+postcount<-sum(postdf$Bush>postdf$Duk)
+print(postcount)
+
+#calculate posterior odds of Bush favorability(?)
+prob<-(precount+postcount)/1000
+
+print(prob)
+
+Output:
+
+> print(postcount)
+[1] 36
+
+> #calculate posterior odds of Bush favorability(?)
+> prob<-(precount+postcount)/1000
+
+> print(prob)
+[1] 0.328
