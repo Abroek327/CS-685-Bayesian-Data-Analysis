@@ -1,0 +1,22 @@
+library(bayesm)
+library(gtools)
+library(brms)
+
+
+df<-data.frame(
+Survey =c(0, 1),      #0 is pre, 1 is post debate
+Bush=c(294,288),
+Duk=c(307,332),
+Other=c(38,19),
+Total=c(639,639)
+)
+
+
+#print(df)
+
+
+
+preFit<-brm(cbind(Bush,Duk,Other,Total)|trials(sizeof(Total))~1, data=df, family=multinomial())
+
+summary(preFit)
+
